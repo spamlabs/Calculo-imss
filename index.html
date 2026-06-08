@@ -1,0 +1,1074 @@
+```html
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Pensión IMSS Ley 1973 | Retiro Inteligente</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons for visual aid -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        /* Custom scrollbar for better styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col antialiased">
+
+    <!-- Header / Navbar -->
+    <header class="bg-emerald-900 text-white shadow-md sticky top-0 z-30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div class="flex items-center gap-3">
+                <div class="bg-emerald-700 p-2.5 rounded-xl shadow-inner">
+                    <i class="fa-solid fa-calculator text-2xl text-emerald-100"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl font-bold tracking-tight">Retiro Ley 1973 IMSS</h1>
+                    <p class="text-xs text-emerald-200">Simulador Profesional de Jubilación en México</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-2 text-sm bg-emerald-800 px-4 py-2 rounded-full border border-emerald-700">
+                <span class="inline-block w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                <span class="text-emerald-100">Vigencia 2026 Actualizada</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        
+        <!-- Welcome banner -->
+        <div class="bg-gradient-to-r from-emerald-800 to-teal-800 rounded-2xl p-6 sm:p-8 text-white mb-8 shadow-lg relative overflow-hidden">
+            <div class="absolute -right-16 -bottom-16 opacity-10 text-9xl">
+                <i class="fa-solid fa-users"></i>
+            </div>
+            <div class="max-w-3xl relative z-10">
+                <span class="bg-emerald-700/60 text-emerald-200 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">Ley del Seguro Social 1973</span>
+                <h2 class="text-2xl sm:text-3xl font-extrabold mt-3 mb-2">Calcula tu Pensión IMSS en tiempo real</h2>
+                <p class="text-emerald-100 text-sm sm:text-base leading-relaxed">
+                    La Ley de 1973 ofrece grandes beneficios para quienes cotizaron por primera vez ante el IMSS antes del 1 de julio de 1997. Usa este simulador para estimar tu pago mensual vitalicio, aguinaldo y comprender paso a paso la fórmula del Artículo 167 de la LSS.
+                </p>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            
+            <!-- Left Side: Interactive Input Panel (Takes 5 columns on large screen) -->
+            <section class="lg:col-span-5 bg-white rounded-2xl shadow-sm border border-slate-200 p-6 space-y-6">
+                <div class="border-b border-slate-100 pb-4 flex justify-between items-center">
+                    <h3 class="font-bold text-lg text-slate-800 flex items-center gap-2">
+                        <i class="fa-solid fa-sliders text-emerald-600"></i>
+                        Parámetros de tu Cálculo
+                    </h3>
+                    <button onclick="resetInputs()" class="text-xs text-slate-400 hover:text-rose-500 transition-colors flex items-center gap-1">
+                        <i class="fa-solid fa-arrow-rotate-left"></i> Reiniciar
+                    </button>
+                </div>
+
+                <!-- 1. Año de Jubilación -->
+                <div class="space-y-2">
+                    <label class="block text-sm font-semibold text-slate-700 flex items-center gap-2">
+                        Año de Jubilación Estimado
+                        <span class="group relative inline-block cursor-help text-slate-400">
+                            <i class="fa-solid fa-circle-question text-xs"></i>
+                            <span class="pointer-events-none absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-64 bg-slate-800 text-white text-xs p-2.5 rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity z-50 leading-relaxed font-normal">
+                                Define el valor oficial de la UMA y el Salario Mínimo para el cálculo de tu tope de salario y de la Pensión Mínima Garantizada del año elegido.
+                            </span>
+                        </span>
+                    </label>
+                    <select id="pensionYear" onchange="updateYearData()" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-800 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all font-medium">
+                        <option value="2026" selected>Año 2026 (UMA: $117.31 | S.M.: $315.04)</option>
+                        <option value="2025">Año 2025 (UMA: $113.14 | S.M.: $278.80)</option>
+                        <option value="2024">Año 2024 (UMA: $108.57 | S.M.: $248.93)</option>
+                        <option value="2023">Año 2023 (UMA: $103.74 | S.M.: $207.44)</option>
+                    </select>
+                </div>
+
+                <!-- 2. Semanas Cotizadas -->
+                <div class="space-y-2">
+                    <div class="flex justify-between items-center">
+                        <label for="weeks" class="text-sm font-semibold text-slate-700 flex items-center gap-2">
+                            Semanas Cotizadas Totales
+                            <span class="group relative inline-block cursor-help text-slate-400">
+                                <i class="fa-solid fa-circle-question text-xs"></i>
+                                <span class="pointer-events-none absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-64 bg-slate-800 text-white text-xs p-2.5 rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity z-50 leading-relaxed font-normal">
+                                    Requieres un mínimo de 500 semanas. Cada bloque de 52 semanas adicionales sobre las primeras 500 incrementa significativamente el monto de tu pensión.
+                                </span>
+                            </span>
+                        </label>
+                        <span class="text-xs bg-emerald-50 text-emerald-700 font-bold px-2 py-1 rounded" id="yearsEquivalent">0 años laborados</span>
+                    </div>
+                    <div class="flex gap-4">
+                        <input type="number" id="weeks" value="1250" min="500" max="2500" step="1" oninput="syncWeeksRange(this.value)" class="w-28 bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-slate-800 text-center font-bold focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+                        <input type="range" id="weeksRange" min="500" max="2200" value="1250" oninput="syncWeeksInput(this.value)" class="flex-grow accent-emerald-600 cursor-pointer">
+                    </div>
+                    <!-- Minimal warning -->
+                    <div id="weeksWarning" class="hidden text-xs text-rose-500 font-medium flex items-center gap-1 mt-1">
+                        <i class="fa-solid fa-triangle-exclamation"></i> Se requieren al menos 500 semanas para jubilarse.
+                    </div>
+                </div>
+
+                <!-- 3. Salario Base de Cotización Diario -->
+                <div class="space-y-2">
+                    <div class="flex justify-between items-center">
+                        <label for="dailyWage" class="text-sm font-semibold text-slate-700 flex items-center gap-2">
+                            Salario Diario Promedio (Pesos)
+                            <span class="group relative inline-block cursor-help text-slate-400">
+                                <i class="fa-solid fa-circle-question text-xs"></i>
+                                <span class="pointer-events-none absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-64 bg-slate-800 text-white text-xs p-2.5 rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity z-50 leading-relaxed font-normal">
+                                    Es el promedio del salario diario base de cotización de las últimas 250 semanas cotizadas (aprox. los últimos 5 años de cotización activa).
+                                </span>
+                            </span>
+                        </label>
+                        <span class="text-xs bg-slate-100 text-slate-600 px-2 py-1 rounded font-semibold" id="umaEquivalent">0.00 UMAs</span>
+                    </div>
+                    <div class="relative">
+                        <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-semibold">$</span>
+                        <input type="number" id="dailyWage" value="850.00" min="50" max="5000" step="1" oninput="handleWageChange(this.value)" class="w-full bg-slate-50 border border-slate-200 rounded-xl pl-8 pr-4 py-3 text-slate-800 font-bold focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all">
+                    </div>
+                    <div class="flex justify-between items-center text-xs text-slate-500">
+                        <span>Equivalente mensual estimado:</span>
+                        <span class="font-bold" id="monthlyWageEst">$0.00</span>
+                    </div>
+                    <!-- Capped limit indicator -->
+                    <div id="wageCapNotice" class="hidden text-[11px] text-amber-600 bg-amber-50 p-2 rounded-lg border border-amber-100 flex items-start gap-1.5 mt-1.5">
+                        <i class="fa-solid fa-circle-info mt-0.5"></i>
+                        <span>Tu salario diario ingresado supera el tope legal de 25 UMAs (<span class="font-bold" id="capWageValue">$0.00</span>). Para el cálculo se usará la cantidad máxima topada.</span>
+                    </div>
+                </div>
+
+                <!-- 4. Edad de Retiro -->
+                <div class="space-y-2">
+                    <div class="flex justify-between items-center">
+                        <label for="age" class="text-sm font-semibold text-slate-700 flex items-center gap-2">
+                            Edad al Pensionarte
+                            <span class="group relative inline-block cursor-help text-slate-400">
+                                <i class="fa-solid fa-circle-question text-xs"></i>
+                                <span class="pointer-events-none absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-64 bg-slate-800 text-white text-xs p-2.5 rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity z-50 leading-relaxed font-normal">
+                                    Determina el tipo de pensión: Cesantía en Edad Avanzada (60-64 años, del 75% al 95%) o Vejez (65 años o más, 100%).
+                                </span>
+                            </span>
+                        </label>
+                        <span class="text-xs bg-emerald-800 text-white font-bold px-2.5 py-1 rounded-full" id="agePercentLabel">100% de la pensión</span>
+                    </div>
+                    <div class="flex gap-4">
+                        <input type="number" id="age" value="65" min="60" max="80" step="1" oninput="syncAgeRange(this.value)" class="w-20 bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-slate-800 text-center font-bold focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+                        <input type="range" id="ageRange" min="60" max="75" value="65" oninput="syncAgeInput(this.value)" class="flex-grow accent-emerald-600 cursor-pointer">
+                    </div>
+                    
+                    <!-- Month adjustment checkbox -->
+                    <label class="flex items-center gap-3 bg-slate-50 p-3 rounded-xl border border-slate-200 cursor-pointer hover:bg-slate-100 transition-colors mt-2">
+                        <input type="checkbox" id="sixMonthsRule" onchange="runCalculation()" class="w-4 h-4 rounded text-emerald-600 focus:ring-emerald-500 border-slate-300">
+                        <div class="text-xs">
+                            <p class="font-bold text-slate-700">Tengo 6 meses y un día adicionales o más</p>
+                            <p class="text-slate-400 font-normal">La ley te permite redondear tu edad laboral al año siguiente para aumentar tu porcentaje.</p>
+                        </div>
+                    </label>
+                </div>
+
+                <!-- 5. Asignaciones Familiares / Ayuda Asistencial -->
+                <div class="space-y-3 bg-slate-50/50 p-4 rounded-xl border border-slate-150">
+                    <h4 class="text-xs font-bold uppercase tracking-wider text-slate-500 flex items-center gap-1.5 mb-1">
+                        <i class="fa-solid fa-children"></i> Asignaciones Familiares / Dependientes
+                    </h4>
+                    
+                    <!-- Spouse -->
+                    <label class="flex items-center justify-between cursor-pointer py-1.5">
+                        <div class="flex items-center gap-2">
+                            <input type="checkbox" id="spouseCheck" onchange="handleSpouseToggle()" class="w-4.5 h-4.5 rounded text-emerald-600 focus:ring-emerald-500 border-slate-300">
+                            <span class="text-xs font-semibold text-slate-700">Cónyuge o Concubina (+15%)</span>
+                        </div>
+                        <i class="fa-solid fa-ring text-slate-400 text-sm"></i>
+                    </label>
+
+                    <!-- Children Count -->
+                    <div class="flex justify-between items-center py-1.5 border-t border-slate-100">
+                        <span class="text-xs font-semibold text-slate-700 flex flex-col">
+                            Hijos menores de 16 años o estudiantes (+10% c/u)
+                            <span class="text-[10px] text-slate-400 font-normal">Deben estudiar en el sistema nacional (hasta 25 años)</span>
+                        </span>
+                        <div class="flex items-center gap-2.5">
+                            <button onclick="decrementCounter('childrenCount')" class="bg-white border border-slate-200 text-slate-600 rounded-lg w-7 h-7 flex items-center justify-center hover:bg-slate-100 font-bold transition-all">-</button>
+                            <span id="childrenCount" class="font-bold text-sm w-4 text-center">0</span>
+                            <button onclick="incrementCounter('childrenCount')" class="bg-white border border-slate-200 text-slate-600 rounded-lg w-7 h-7 flex items-center justify-center hover:bg-slate-100 font-bold transition-all">+</button>
+                        </div>
+                    </div>
+
+                    <!-- Parents Count -->
+                    <div id="parentsDiv" class="flex justify-between items-center py-1.5 border-t border-slate-100">
+                        <span class="text-xs font-semibold text-slate-700 flex flex-col">
+                            Padres Dependientes Económicos (+10% c/u)
+                            <span class="text-[10px] text-slate-400 font-normal">Solo aplica si no tienes cónyuge ni hijos</span>
+                        </span>
+                        <div class="flex items-center gap-2.5">
+                            <button onclick="decrementCounter('parentsCount')" class="bg-white border border-slate-200 text-slate-600 rounded-lg w-7 h-7 flex items-center justify-center hover:bg-slate-100 font-bold transition-all">-</button>
+                            <span id="parentsCount" class="font-bold text-sm w-4 text-center">0</span>
+                            <button onclick="incrementCounter('parentsCount')" class="bg-white border border-slate-200 text-slate-600 rounded-lg w-7 h-7 flex items-center justify-center hover:bg-slate-100 font-bold transition-all">+</button>
+                        </div>
+                    </div>
+
+                    <!-- Dynamic Help Notice -->
+                    <div id="assistHelpNotice" class="text-[11px] text-emerald-700 bg-emerald-50/50 p-2 rounded-lg border border-emerald-100 flex items-start gap-1.5">
+                        <i class="fa-solid fa-circle-info mt-0.5"></i>
+                        <span>Al no registrar cónyuge ni hijos o padres, el IMSS te asigna automáticamente un **15% de ayuda asistencial** de ley.</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Right Side: Calculations, Results & Simulator (Takes 7 columns) -->
+            <section class="lg:col-span-7 space-y-8">
+                
+                <!-- Main Results Card -->
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+                    <div class="bg-gradient-to-r from-emerald-900 to-emerald-800 px-6 py-6 text-white flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                        <div>
+                            <h3 class="text-sm font-semibold tracking-wider text-emerald-200 uppercase">Pensión Estimada Mensual</h3>
+                            <div class="flex items-baseline gap-2 mt-1">
+                                <span class="text-3xl sm:text-4xl font-extrabold tracking-tight" id="resultPension">$0.00</span>
+                                <span class="text-xs text-emerald-200 font-medium">MXN / Mes</span>
+                            </div>
+                        </div>
+                        <div class="bg-emerald-800/60 backdrop-blur-sm border border-emerald-700 px-4 py-2.5 rounded-xl w-full sm:w-auto text-center sm:text-left">
+                            <span class="text-[10px] text-emerald-300 font-bold uppercase tracking-wider block">Aguinaldo de Fin de Año</span>
+                            <span class="text-lg font-bold text-emerald-50" id="resultAguinaldo">$0.00</span>
+                        </div>
+                    </div>
+
+                    <div class="p-6 space-y-6">
+                        <!-- Key metrics row -->
+                        <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 text-center">
+                            <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-100">
+                                <span class="text-[10px] text-slate-400 font-bold tracking-wider uppercase block">Tasa de Reemplazo</span>
+                                <span class="text-lg font-extrabold text-slate-700" id="resultReplacement">0.0%</span>
+                                <span class="text-[10px] text-slate-400 block mt-0.5">de tu salario promedio</span>
+                            </div>
+                            <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-100">
+                                <span class="text-[10px] text-slate-400 font-bold tracking-wider uppercase block">Semanas Excedentes</span>
+                                <span class="text-lg font-extrabold text-slate-700" id="resultExcessWeeks">0</span>
+                                <span class="text-[10px] text-slate-400 block mt-0.5">sobre las 500 de ley</span>
+                            </div>
+                            <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-100 col-span-2 sm:col-span-1">
+                                <span class="text-[10px] text-slate-400 font-bold tracking-wider uppercase block">Tipo de Retiro</span>
+                                <span class="text-sm font-extrabold text-emerald-700 block mt-1" id="resultRetirementType">-</span>
+                                <span class="text-[9px] text-slate-400 block" id="resultRetirementTypeDetail">Porcentaje por edad</span>
+                            </div>
+                        </div>
+
+                        <!-- Minimum Pension applied badge -->
+                        <div id="minPensionBadge" class="hidden bg-amber-50 text-amber-800 p-4 rounded-xl border border-amber-200 flex items-start gap-3">
+                            <div class="bg-amber-100 text-amber-800 p-1.5 rounded-lg">
+                                <i class="fa-solid fa-shield-halved"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-xs font-bold">¡Pensión Mínima Garantizada Aplicada!</h4>
+                                <p class="text-[11px] text-amber-700 leading-relaxed mt-0.5">
+                                    El cálculo matemático de tu pensión resultó menor al salario mínimo general vigente. Por ley, tienes garantizado recibir por lo menos un salario mínimo general mensual ajustado por el factor de decreto presidencial de 1.11 (<span class="font-bold" id="badgeMinAmount">$0.00</span>).
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Action buttons -->
+                        <div class="flex flex-wrap gap-3">
+                            <button onclick="window.print()" class="flex-grow sm:flex-grow-0 bg-slate-800 hover:bg-slate-900 text-white font-semibold text-xs px-5 py-3 rounded-xl transition-all flex items-center justify-center gap-2 shadow-sm">
+                                <i class="fa-solid fa-print"></i> Imprimir Reporte
+                            </button>
+                            <button onclick="copySummaryToClipboard()" class="flex-grow sm:flex-grow-0 bg-white hover:bg-slate-50 text-slate-700 font-semibold text-xs px-5 py-3 rounded-xl border border-slate-300 transition-all flex items-center justify-center gap-2 shadow-sm">
+                                <i class="fa-solid fa-copy"></i> Copiar Resumen
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step-by-Step Mathematical Breakdown -->
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+                    <div class="border-b border-slate-100 pb-3 mb-4 flex justify-between items-center">
+                        <h4 class="font-bold text-slate-800 flex items-center gap-2">
+                            <i class="fa-solid fa-list-ol text-emerald-600"></i>
+                            Desglose de Cálculo (Paso a Paso)
+                        </h4>
+                        <span class="text-[10px] bg-slate-100 text-slate-500 font-bold px-2 py-1 rounded">Art. 167 LSS 1973</span>
+                    </div>
+
+                    <div class="space-y-4 text-xs">
+                        <!-- Step 1 -->
+                        <div class="flex items-start gap-3">
+                            <span class="bg-emerald-100 text-emerald-800 font-bold rounded-full w-5 h-5 flex items-center justify-center flex-shrink-0 mt-0.5">1</span>
+                            <div class="flex-grow">
+                                <div class="flex justify-between font-semibold text-slate-700">
+                                    <span>Factor de Salario en Veces UMA</span>
+                                    <span id="step1_val">0.00</span>
+                                </div>
+                                <p class="text-slate-400 mt-0.5">Se obtiene dividiendo tu salario diario registrado (<span class="font-semibold" id="step1_wage">$0.00</span>) entre la UMA vigente de la fecha de pensión (<span class="font-semibold" id="step1_uma">$0.00</span>).</p>
+                            </div>
+                        </div>
+
+                        <!-- Step 2 -->
+                        <div class="flex items-start gap-3 border-t border-slate-50 pt-3">
+                            <span class="bg-emerald-100 text-emerald-800 font-bold rounded-full w-5 h-5 flex items-center justify-center flex-shrink-0 mt-0.5">2</span>
+                            <div class="flex-grow">
+                                <div class="flex justify-between font-semibold text-slate-700">
+                                    <span>Porcentajes Art. 167 Aplicados</span>
+                                    <span id="step2_val">Cuantía: 0% | Incremento: 0%</span>
+                                </div>
+                                <p class="text-slate-400 mt-0.5">Ubicados en la tabla oficial de porcentajes de acuerdo a la relación UMA obtenida en el Paso 1.</p>
+                            </div>
+                        </div>
+
+                        <!-- Step 3 -->
+                        <div class="flex items-start gap-3 border-t border-slate-50 pt-3">
+                            <span class="bg-emerald-100 text-emerald-800 font-bold rounded-full w-5 h-5 flex items-center justify-center flex-shrink-0 mt-0.5">3</span>
+                            <div class="flex-grow">
+                                <div class="flex justify-between font-semibold text-slate-700">
+                                    <span>Cuantía Básica Anual</span>
+                                    <span id="step3_val">$0.00</span>
+                                </div>
+                                <p class="text-slate-400 mt-0.5">Fórmula: Salario diario × % Cuantía Básica × 365 días.</p>
+                            </div>
+                        </div>
+
+                        <!-- Step 4 -->
+                        <div class="flex items-start gap-3 border-t border-slate-50 pt-3">
+                            <span class="bg-emerald-100 text-emerald-800 font-bold rounded-full w-5 h-5 flex items-center justify-center flex-shrink-0 mt-0.5">4</span>
+                            <div class="flex-grow">
+                                <div class="flex justify-between font-semibold text-slate-700">
+                                    <span>Incrementos Anuales por semanas excedentes</span>
+                                    <span id="step4_val">$0.00</span>
+                                </div>
+                                <p class="text-slate-400 mt-0.5">Fórmula: Salario diario × % Incremento Anual × 365 días × <span id="step4_years" class="font-bold">0</span> años excedentes reconocidos de cotización.</p>
+                            </div>
+                        </div>
+
+                        <!-- Step 5 -->
+                        <div class="flex items-start gap-3 border-t border-slate-50 pt-3">
+                            <span class="bg-emerald-100 text-emerald-800 font-bold rounded-full w-5 h-5 flex items-center justify-center flex-shrink-0 mt-0.5">5</span>
+                            <div class="flex-grow">
+                                <div class="flex justify-between font-semibold text-slate-700">
+                                    <span>Asignaciones Familiares / Ayudas (+<span id="step5_perc">0</span>%)</span>
+                                    <span id="step5_val">$0.00</span>
+                                </div>
+                                <p class="text-slate-400 mt-0.5">Se añaden al importe total por concepto de cargas familiares o ayuda asistencial.</p>
+                            </div>
+                        </div>
+
+                        <!-- Step 6 -->
+                        <div class="flex items-start gap-3 border-t border-slate-50 pt-3">
+                            <span class="bg-emerald-100 text-emerald-800 font-bold rounded-full w-5 h-5 flex items-center justify-center flex-shrink-0 mt-0.5">6</span>
+                            <div class="flex-grow">
+                                <div class="flex justify-between font-semibold text-slate-700">
+                                    <span>Incremento por Decreto Presidencial (Factor Fox)</span>
+                                    <span id="step6_val">Multiplicado por 1.11 (11% adicional)</span>
+                                </div>
+                                <p class="text-slate-400 mt-0.5">Factor automático establecido por decreto nacional para incrementar todas las pensiones de la Ley 1973.</p>
+                            </div>
+                        </div>
+
+                        <!-- Step 7 -->
+                        <div class="flex items-start gap-3 border-t border-slate-50 pt-3">
+                            <span class="bg-emerald-100 text-emerald-800 font-bold rounded-full w-5 h-5 flex items-center justify-center flex-shrink-0 mt-0.5">7</span>
+                            <div class="flex-grow">
+                                <div class="flex justify-between font-semibold text-slate-700">
+                                    <span>Ajuste por Edad de Retiro</span>
+                                    <span id="step7_val">100% aplicado</span>
+                                </div>
+                                <p class="text-slate-400 mt-0.5">Se aplica el porcentaje por edad (<span class="font-semibold" id="step7_age_desc">65 años</span>). Finalmente, el monto total se divide entre 12 meses.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Interactive Bonus Section: Modalidad 40 Simulator -->
+                <div class="bg-gradient-to-br from-slate-900 to-slate-800 rounded-2xl shadow-md p-6 text-white border border-slate-700 relative overflow-hidden">
+                    <div class="absolute right-0 top-0 w-24 h-24 bg-emerald-500/10 rounded-full blur-2xl"></div>
+                    
+                    <div class="flex items-center gap-2.5 mb-2">
+                        <span class="bg-emerald-500/20 text-emerald-300 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">Planificación Avanzada</span>
+                        <h4 class="font-bold text-base text-slate-100 flex items-center gap-1.5">
+                            <i class="fa-solid fa-rocket text-emerald-400"></i>
+                            ¿Quieres aumentar tu pensión? (Modalidad 40)
+                        </h4>
+                    </div>
+                    <p class="text-slate-300 text-xs leading-relaxed mb-4">
+                        La **Modalidad 40** (Continuación Voluntaria) te permite cotizar por tu cuenta con un salario mucho más alto del que tenías. Si incrementas tu salario promedio en los últimos 5 años, tu pensión mensual puede subir exponencialmente. Mira la proyección a continuación:
+                    </p>
+
+                    <div class="bg-slate-850/50 rounded-xl p-4 border border-slate-700/60 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Simular Salario Diario de Cotización</label>
+                            <div class="relative">
+                                <span class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 font-bold text-xs">$</span>
+                                <input type="number" id="m40Wage" value="2500" min="500" max="3500" class="w-full bg-slate-900 border border-slate-700 rounded-lg pl-7 pr-3 py-2 text-white text-xs font-bold focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+                            </div>
+                            <span class="text-[10px] text-slate-500 mt-1 block">Tope máximo oficial en 2026: 25 UMAs</span>
+                        </div>
+                        <div class="flex flex-col justify-end">
+                            <button onclick="simulateModalidad40()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs px-4 py-2.5 rounded-lg transition-all flex items-center justify-center gap-1.5 shadow-sm">
+                                <i class="fa-solid fa-chart-line"></i> Proyectar Escenario
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- M40 result block hidden or shown dynamically -->
+                    <div id="m40Results" class="hidden mt-4 pt-4 border-t border-slate-700/60 space-y-3">
+                        <div class="flex justify-between items-center bg-emerald-950/40 p-3 rounded-lg border border-emerald-800/30">
+                            <div>
+                                <span class="text-[10px] text-slate-400 font-bold block uppercase tracking-wider">Pensión Simulada con Modalidad 40</span>
+                                <span class="text-xl font-extrabold text-emerald-300" id="m40ResultAmount">$0.00 MXN / Mes</span>
+                            </div>
+                            <div class="text-right">
+                                <span class="text-[10px] text-emerald-400 font-bold block uppercase tracking-wider">Incremento Estimado</span>
+                                <span class="text-sm font-extrabold text-white" id="m40ResultGain">+$0.00 (+0%)</span>
+                            </div>
+                        </div>
+                        <p class="text-[10px] text-slate-400 leading-normal italic text-center">
+                            *Este cálculo considera que se mantiene tu mismo número de semanas cotizadas actuales. Te recomendamos asesorarte con un consultor calificado para planificar tus aportaciones de Modalidad 40 de manera óptima.
+                        </p>
+                    </div>
+                </div>
+
+            </section>
+        </div>
+
+        <!-- Custom Notification Toast (replaces browser alerts) -->
+        <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 bg-slate-900 text-white px-5 py-3.5 rounded-xl shadow-2xl border border-slate-800 flex items-center gap-3">
+            <span class="bg-emerald-500 text-slate-950 p-1.5 rounded-lg text-xs" id="toastIcon">
+                <i class="fa-solid fa-check"></i>
+            </span>
+            <span class="text-xs font-semibold" id="toastMessage">Acción completada con éxito.</span>
+        </div>
+
+        <!-- FAQ & Educational Guide Section -->
+        <section class="mt-16 bg-white rounded-2xl shadow-sm border border-slate-200 p-6 sm:p-8 space-y-6">
+            <div class="border-b border-slate-100 pb-4">
+                <h3 class="font-bold text-xl text-slate-800 flex items-center gap-2">
+                    <i class="fa-solid fa-book-open text-emerald-600"></i>
+                    Guía de la Pensión Ley 1973 IMSS
+                </h3>
+                <p class="text-slate-400 text-xs">Aprende a interpretar tus resultados y las reglas de jubilación de este régimen de transición</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm text-slate-600">
+                <div class="space-y-3">
+                    <h4 class="font-bold text-slate-700 flex items-center gap-1.5">
+                        <i class="fa-solid fa-circle-question text-emerald-600"></i>
+                        ¿Cómo sé si pertenezco a la Ley de 1973?
+                    </h4>
+                    <p class="leading-relaxed text-xs">
+                        Para poder jubilarte bajo este régimen debiste haber comenzado a cotizar formalmente ante el IMSS antes del **1 de julio de 1997**. Si tu primera cotización es posterior a esa fecha, te corresponde la Ley de 1997 (por medio de AFORE). Puedes confirmarlo revisando tu Estado de Cuenta de la AFORE o tu Constancia de Semanas Cotizadas.
+                    </p>
+                </div>
+
+                <div class="space-y-3">
+                    <h4 class="font-bold text-slate-700 flex items-center gap-1.5">
+                        <i class="fa-solid fa-calendar-check text-emerald-600"></i>
+                        ¿Qué es la pensión mínima garantizada?
+                    </h4>
+                    <p class="leading-relaxed text-xs">
+                        Es el monto mínimo de pensión mensual que el gobierno mexicano asegura a cualquier trabajador que califique para jubilarse por la Ley 73 (mínimo 500 semanas). Equivale a un salario mínimo general mensual vigente en la Ciudad de México, el cual se incrementa por un factor automático del 11% (Decreto Fox) al momento de otorgarse la jubilación. En 2026, este monto equivale a **$10,636.54 pesos mensuales**.
+                    </p>
+                </div>
+
+                <div class="space-y-3">
+                    <h4 class="font-bold text-slate-700 flex items-center gap-1.5">
+                        <i class="fa-solid fa-percent text-emerald-600"></i>
+                        ¿Cómo afecta la edad de jubilación al pago?
+                    </h4>
+                    <p class="leading-relaxed text-xs">
+                        Si decides pensionarte antes de los 65 años, la pensión mensual base disminuye un 5% por cada año de anticipación. Las escalas de edad son:
+                    </p>
+                    <ul class="grid grid-cols-2 gap-2 text-[11px] bg-slate-50 p-3 rounded-lg border border-slate-100 font-semibold text-slate-500">
+                        <li class="flex justify-between"><span>60 años:</span> <span class="text-emerald-700">75% (Cesantía)</span></li>
+                        <li class="flex justify-between"><span>61 años:</span> <span class="text-emerald-700">80% (Cesantía)</span></li>
+                        <li class="flex justify-between"><span>62 años:</span> <span class="text-emerald-700">85% (Cesantía)</span></li>
+                        <li class="flex justify-between"><span>63 años:</span> <span class="text-emerald-700">90% (Cesantía)</span></li>
+                        <li class="flex justify-between"><span>64 años:</span> <span class="text-emerald-700">95% (Cesantía)</span></li>
+                        <li class="flex justify-between"><span>65 años+:</span> <span class="text-emerald-700">100% (Vejez)</span></li>
+                    </ul>
+                </div>
+
+                <div class="space-y-3">
+                    <h4 class="font-bold text-slate-700 flex items-center gap-1.5">
+                        <i class="fa-solid fa-star text-emerald-600"></i>
+                        ¿Qué son las semanas excedentes?
+                    </h4>
+                    <p class="leading-relaxed text-xs">
+                        Para tener derecho a la pensión de la Ley 73 requieres un piso mínimo de 500 semanas de cotización. Cada bloque de 52 semanas adicionales que cotices por encima de ese piso funciona como una "semana excedente". Al final del cálculo de la pensión, estas semanas excedentes se multiplican por un porcentaje llamado **Incremento Anual** que puede llegar a multiplicar exponencialmente tu jubilación.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-400 text-xs py-8 mt-12 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left">
+            <div>
+                <p class="font-bold text-slate-200">Simulador de Pensiones IMSS de la Ley 1973</p>
+                <p class="mt-1 text-slate-500">Herramienta informativa y de simulación para propósitos educativos. Los cálculos mostrados son estimaciones basadas en la Ley del Seguro Social vigente hasta el 30 de junio de 1997 y el Artículo 167 de dicha ley.</p>
+            </div>
+            <div class="flex-shrink-0 text-slate-500">
+                <span>Desarrollado en 2026 para Retiro Seguro</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Logic JS Script -->
+    <script>
+        // Official values by year (UMA, Minimum Wage, Calculated Minimum Pension)
+        const yearData = {
+            "2026": {
+                uma: 117.31,
+                minWage: 315.04,
+                minPension: 10636.54
+            },
+            "2025": {
+                uma: 113.14,
+                minWage: 278.80,
+                minPension: 9412.35
+            },
+            "2024": {
+                uma: 108.57,
+                minWage: 248.93,
+                minPension: 8404.09
+            },
+            "2023": {
+                uma: 103.74,
+                minWage: 207.44,
+                minPension: 7002.30
+            }
+        };
+
+        // State Store variables
+        let selectedYear = "2026";
+        let state = {
+            weeks: 1250,
+            dailyWage: 850.00,
+            age: 65,
+            hasSixMonths: false,
+            hasSpouse: false,
+            childrenCount: 0,
+            parentsCount: 0
+        };
+
+        // Initialize view on load
+        window.onload = function() {
+            updateYearData();
+            runCalculation();
+        };
+
+        // Format currency helper
+        function formatCurrency(value) {
+            return new Intl.NumberFormat('es-MX', {
+                style: 'currency',
+                currency: 'MXN'
+            }).format(value);
+        }
+
+        // System update triggers when year selection drops
+        function updateYearData() {
+            selectedYear = document.getElementById("pensionYear").value;
+            const currentObj = yearData[selectedYear];
+
+            // Setup input limits based on UMA
+            const maxCapWage = currentObj.uma * 25;
+            document.getElementById("capWageValue").innerText = formatCurrency(maxCapWage);
+            
+            // Check if current wage entered exceeds the cap
+            const wageCapNotice = document.getElementById("wageCapNotice");
+            if (state.dailyWage > maxCapWage) {
+                wageCapNotice.classList.remove("hidden");
+            } else {
+                wageCapNotice.classList.add("hidden");
+            }
+
+            runCalculation();
+        }
+
+        // Input sync controls for Weeks range slider
+        function syncWeeksRange(val) {
+            let numericVal = parseInt(val) || 0;
+            if (numericVal < 0) numericVal = 0;
+            state.weeks = numericVal;
+            document.getElementById("weeksRange").value = Math.min(numericVal, 2200);
+            
+            // Alert user if weeks are under the minimum required
+            const warningEl = document.getElementById("weeksWarning");
+            if (numericVal < 500) {
+                warningEl.classList.remove("hidden");
+            } else {
+                warningEl.classList.add("hidden");
+            }
+
+            runCalculation();
+        }
+
+        function syncWeeksInput(val) {
+            state.weeks = parseInt(val);
+            document.getElementById("weeks").value = val;
+            document.getElementById("weeksWarning").classList.add("hidden");
+            runCalculation();
+        }
+
+        // Input sync controls for Age range slider
+        function syncAgeRange(val) {
+            let numericVal = parseInt(val) || 60;
+            if (numericVal < 60) numericVal = 60;
+            if (numericVal > 95) numericVal = 95;
+            state.age = numericVal;
+            document.getElementById("ageRange").value = Math.min(numericVal, 75);
+            runCalculation();
+        }
+
+        function syncAgeInput(val) {
+            state.age = parseInt(val);
+            document.getElementById("age").value = val;
+            runCalculation();
+        }
+
+        // Daily wage changed
+        function handleWageChange(val) {
+            let numVal = parseFloat(val) || 0;
+            if (numVal < 0) numVal = 0;
+            state.dailyWage = numVal;
+
+            const currentObj = yearData[selectedYear];
+            const maxCapWage = currentObj.uma * 25;
+            
+            // Show cap notice if necessary
+            const wageCapNotice = document.getElementById("wageCapNotice");
+            if (numVal > maxCapWage) {
+                wageCapNotice.classList.remove("hidden");
+            } else {
+                wageCapNotice.classList.add("hidden");
+            }
+
+            runCalculation();
+        }
+
+        // Increment and decrement handlers for counters
+        function incrementCounter(field) {
+            if (field === 'childrenCount') {
+                if (state.childrenCount < 10) {
+                    state.childrenCount++;
+                    document.getElementById("childrenCount").innerText = state.childrenCount;
+                }
+            } else if (field === 'parentsCount') {
+                if (state.parentsCount < 2) {
+                    state.parentsCount++;
+                    document.getElementById("parentsCount").innerText = state.parentsCount;
+                }
+            }
+            adjustDependentsAvailability();
+            runCalculation();
+        }
+
+        function decrementCounter(field) {
+            if (field === 'childrenCount') {
+                if (state.childrenCount > 0) {
+                    state.childrenCount--;
+                    document.getElementById("childrenCount").innerText = state.childrenCount;
+                }
+            } else if (field === 'parentsCount') {
+                if (state.parentsCount > 0) {
+                    state.parentsCount--;
+                    document.getElementById("parentsCount").innerText = state.parentsCount;
+                }
+            }
+            adjustDependentsAvailability();
+            runCalculation();
+        }
+
+        // Handle Spouse Toggle
+        function handleSpouseToggle() {
+            state.hasSpouse = document.getElementById("spouseCheck").checked;
+            adjustDependentsAvailability();
+            runCalculation();
+        }
+
+        // Parent allocations only apply if there are no children or spouses
+        function adjustDependentsAvailability() {
+            const parentsDiv = document.getElementById("parentsDiv");
+            const assistHelpNotice = document.getElementById("assistHelpNotice");
+
+            const hasActiveDependents = state.hasSpouse || state.childrenCount > 0;
+
+            if (hasActiveDependents) {
+                // Parents cannot be claimed
+                parentsDiv.classList.add("opacity-40", "pointer-events-none");
+                state.parentsCount = 0;
+                document.getElementById("parentsCount").innerText = "0";
+                assistHelpNotice.classList.add("hidden");
+            } else {
+                parentsDiv.classList.remove("opacity-40", "pointer-events-none");
+                if (state.parentsCount === 0) {
+                    assistHelpNotice.classList.remove("hidden");
+                } else {
+                    assistHelpNotice.classList.add("hidden");
+                }
+            }
+        }
+
+        // Reset inputs to default values
+        function resetInputs() {
+            state = {
+                weeks: 1250,
+                dailyWage: 850.00,
+                age: 65,
+                hasSixMonths: false,
+                hasSpouse: false,
+                childrenCount: 0,
+                parentsCount: 0
+            };
+
+            document.getElementById("pensionYear").value = "2026";
+            document.getElementById("weeks").value = "1250";
+            document.getElementById("weeksRange").value = "1250";
+            document.getElementById("dailyWage").value = "850.00";
+            document.getElementById("age").value = "65";
+            document.getElementById("ageRange").value = "65";
+            document.getElementById("sixMonthsRule").checked = false;
+            document.getElementById("spouseCheck").checked = false;
+            document.getElementById("childrenCount").innerText = "0";
+            document.getElementById("parentsCount").innerText = "0";
+
+            document.getElementById("weeksWarning").classList.add("hidden");
+            document.getElementById("m40Results").classList.add("hidden");
+
+            selectedYear = "2026";
+            adjustDependentsAvailability();
+            updateYearData();
+            showToast("Valores restablecidos a predeterminados", "fa-arrow-rotate-left");
+        }
+
+        // Article 167 official ratio index mapping
+        function getTableFactors(ratio) {
+            if (ratio <= 1.0) return { cb: 80.0, ia: 0.563 };
+            if (ratio <= 1.25) return { cb: 77.11, ia: 0.814 };
+            if (ratio <= 1.50) return { cb: 58.18, ia: 1.178 };
+            if (ratio <= 1.75) return { cb: 49.23, ia: 1.430 };
+            if (ratio <= 2.00) return { cb: 42.67, ia: 1.615 };
+            if (ratio <= 2.25) return { cb: 37.65, ia: 1.756 };
+            if (ratio <= 2.50) return { cb: 33.68, ia: 1.868 };
+            if (ratio <= 2.75) return { cb: 30.48, ia: 1.958 };
+            if (ratio <= 3.00) return { cb: 27.83, ia: 2.033 };
+            if (ratio <= 3.25) return { cb: 25.60, ia: 2.096 };
+            if (ratio <= 3.50) return { cb: 23.70, ia: 2.149 };
+            if (ratio <= 3.75) return { cb: 22.07, ia: 2.195 };
+            if (ratio <= 4.00) return { cb: 20.65, ia: 2.235 };
+            if (ratio <= 4.25) return { cb: 19.39, ia: 2.271 };
+            if (ratio <= 4.50) return { cb: 18.29, ia: 2.302 };
+            if (ratio <= 4.75) return { cb: 17.30, ia: 2.330 };
+            if (ratio <= 5.00) return { cb: 16.41, ia: 2.355 };
+            if (ratio <= 5.25) return { cb: 15.61, ia: 2.377 };
+            if (ratio <= 5.50) return { cb: 14.88, ia: 2.398 };
+            if (ratio <= 5.75) return { cb: 14.22, ia: 2.416 };
+            if (ratio <= 6.00) return { cb: 13.62, ia: 2.433 };
+            return { cb: 13.00, ia: 2.450 }; // > 6.01
+        }
+
+        // Core Calculation Engine
+        function runPensionMath(inputWeeks, inputDailyWage, inputAge, inputSixMonths, inputHasSpouse, inputChildren, inputParents) {
+            const currentObj = yearData[selectedYear];
+            const { uma, minPension } = currentObj;
+
+            // 1. Cap Daily Wage at 25 UMAs
+            const maxWageCap = uma * 25;
+            const finalDailyWage = Math.min(inputDailyWage, maxWageCap);
+
+            // 2. Calculate times UMA ratio
+            const ratio = finalDailyWage / uma;
+
+            // 3. Obtain factors from Art 167 table
+            const { cb, ia } = getTableFactors(ratio);
+
+            // 4. Cuantía Básica Anual (CBA)
+            const cba = finalDailyWage * (cb / 100) * 365;
+
+            // 5. Excess weeks calculation
+            const excessWeeks = Math.max(0, inputWeeks - 500);
+            let excessYears = Math.floor(excessWeeks / 52);
+            
+            // Apply partial excess year rule
+            const leftoverWeeks = excessWeeks % 52;
+            if (leftoverWeeks >= 13 && leftoverWeeks <= 26) {
+                excessYears += 0.5;
+            } else if (leftoverWeeks >= 27) {
+                excessYears += 1.0;
+            }
+
+            // 6. Annual Increment Total
+            const incrementTotal = finalDailyWage * (ia / 100) * 365 * excessYears;
+
+            // 7. Base Annual Pension
+            const pba = cba + incrementTotal;
+
+            // 8. Family Allowances and Assistances
+            let allowancePercentage = 0.0;
+            let spouseVal = inputHasSpouse ? 0.15 : 0.0;
+            let childrenVal = inputChildren * 0.10;
+            let parentsVal = 0.0;
+
+            const hasActiveDependents = inputHasSpouse || inputChildren > 0;
+            if (!hasActiveDependents) {
+                parentsVal = inputParents * 0.10;
+                if (inputParents === 0) {
+                    // Automatically get 15% help if no dependents exist
+                    allowancePercentage = 0.15;
+                } else {
+                    allowancePercentage = parentsVal;
+                }
+            } else {
+                allowancePercentage = spouseVal + childrenVal;
+            }
+
+            const allowancesAmount = pba * allowancePercentage;
+
+            // 9. Total with allowances
+            const pensionWithAllowances = pba + allowancesAmount;
+
+            // 10. Fox factor (+11%)
+            const finalBeforeAge = pensionWithAllowances * 1.11;
+
+            // 11. Age Factor Percentage
+            let calculatedAge = inputAge;
+            if (inputSixMonths && inputAge < 65) {
+                calculatedAge += 1;
+            }
+
+            let agePercentage = 0.75;
+            if (calculatedAge >= 65) agePercentage = 1.0;
+            else if (calculatedAge === 64) agePercentage = 0.95;
+            else if (calculatedAge === 63) agePercentage = 0.90;
+            else if (calculatedAge === 62) agePercentage = 0.85;
+            else if (calculatedAge === 61) agePercentage = 0.80;
+            else if (calculatedAge === 60) agePercentage = 0.75;
+            else if (calculatedAge < 60) agePercentage = 0.75; // Pre-retirement calculations map to base age
+
+            // 12. Final Pension Annual and Monthly
+            const finalAnnualPension = finalBeforeAge * agePercentage;
+            let finalMonthlyPension = finalAnnualPension / 12;
+
+            // 13. Guarantee Check (Ley 73 cannot be less than SMG of year + Fox factor)
+            let isMinApplied = false;
+            if (finalMonthlyPension < minPension) {
+                finalMonthlyPension = minPension;
+                isMinApplied = true;
+            }
+
+            // 14. End of Year Aguinaldo (equals 1 month of pension without allowances or age discounts, wait, actually under Ley 73, aguinaldo is equivalent to 1 month of pension without allowances, but standardly equal to the base pension).
+            // Legal rule: Aguinaldo is equal to the amount of the pension without allowances.
+            const aguinaldo = (pba * agePercentage * 1.11) / 12;
+
+            return {
+                ratio,
+                cb,
+                ia,
+                cba,
+                excessWeeks,
+                excessYears,
+                incrementTotal,
+                pba,
+                allowancePercentage,
+                allowancesAmount,
+                finalBeforeAge,
+                agePercentage,
+                finalMonthlyPension,
+                aguinaldo,
+                isMinApplied,
+                minPension,
+                maxWageCap,
+                finalDailyWage,
+                calculatedAge
+            };
+        }
+
+        // Orchestrator to execute, format and write changes to HTML in real-time
+        function runCalculation() {
+            // Get interactive states
+            const weeksVal = state.weeks;
+            const wageVal = state.dailyWage;
+            const ageVal = state.age;
+            const hasSixMonths = document.getElementById("sixMonthsRule").checked;
+
+            // Perform Math
+            const res = runPensionMath(weeksVal, wageVal, ageVal, hasSixMonths, state.hasSpouse, state.childrenCount, state.parentsCount);
+
+            // Update UI elements
+            document.getElementById("yearsEquivalent").innerText = `${(weeksVal / 52).toFixed(1)} años cotizados`;
+            
+            const currentObj = yearData[selectedYear];
+            document.getElementById("umaEquivalent").innerText = `${(Math.min(wageVal, res.maxWageCap) / currentObj.uma).toFixed(2)} veces UMA`;
+            document.getElementById("monthlyWageEst").innerText = formatCurrency(wageVal * 30.4);
+
+            // Age Percent UI text
+            let ageDetailText = "Porcentaje de asignación por edad";
+            if (res.calculatedAge >= 65) {
+                ageDetailText = "Pensión por Vejez (100%)";
+            } else {
+                ageDetailText = `Pensión por Cesantía en Edad Avanzada (${Math.round(res.agePercentage * 100)}%)`;
+            }
+            if (hasSixMonths && ageVal < 65) {
+                ageDetailText += " | Incluye ajuste de +6 meses";
+            }
+            document.getElementById("agePercentLabel").innerText = `${Math.round(res.agePercentage * 100)}% de la pensión`;
+
+            // Core result cards
+            document.getElementById("resultPension").innerText = formatCurrency(res.finalMonthlyPension);
+            document.getElementById("resultAguinaldo").innerText = formatCurrency(res.aguinaldo);
+            
+            // Tasa de reemplazo (Tasa = pension / salario promedio mensual)
+            const replacementRate = ((res.finalMonthlyPension / (wageVal * 30.4)) * 100).toFixed(1);
+            document.getElementById("resultReplacement").innerText = `${replacementRate}%`;
+            document.getElementById("resultExcessWeeks").innerText = res.excessWeeks;
+            document.getElementById("resultRetirementType").innerText = res.calculatedAge >= 65 ? "Vejez" : "Cesantía";
+            document.getElementById("resultRetirementTypeDetail").innerText = ageDetailText;
+
+            // Minimum Pension alert
+            const minPensionBadge = document.getElementById("minPensionBadge");
+            const badgeMinAmount = document.getElementById("badgeMinAmount");
+            if (res.isMinApplied) {
+                minPensionBadge.classList.remove("hidden");
+                badgeMinAmount.innerText = formatCurrency(res.minPension);
+            } else {
+                minPensionBadge.classList.add("hidden");
+            }
+
+            // Step desgloses update
+            document.getElementById("step1_val").innerText = `${res.ratio.toFixed(2)} veces UMA`;
+            document.getElementById("step1_wage").innerText = formatCurrency(res.finalDailyWage);
+            document.getElementById("step1_uma").innerText = formatCurrency(currentObj.uma);
+
+            document.getElementById("step2_val").innerText = `Cuantía: ${res.cb.toFixed(2)}% | Incremento Anual: ${res.ia.toFixed(3)}%`;
+            document.getElementById("step3_val").innerText = `${formatCurrency(res.cba)} anual`;
+            document.getElementById("step4_val").innerText = `${formatCurrency(res.incrementTotal)} anual`;
+            document.getElementById("step4_years").innerText = res.excessYears;
+            
+            document.getElementById("step5_perc").innerText = Math.round(res.allowancePercentage * 100);
+            document.getElementById("step5_val").innerText = `${formatCurrency(res.allowancesAmount)} anual`;
+
+            let step7AgeDescStr = `${ageVal} años (${Math.round(res.agePercentage * 100)}%)`;
+            if (hasSixMonths && ageVal < 65) {
+                step7AgeDescStr = `${ageVal} años + 6 meses. Se liquida al ${Math.round(res.agePercentage * 100)}% (como ${ageVal + 1} años)`;
+            }
+            document.getElementById("step7_val").innerText = `${Math.round(res.agePercentage * 100)}% aplicado`;
+            document.getElementById("step7_age_desc").innerText = step7AgeDescStr;
+        }
+
+        // Modalidad 40 projections
+        function simulateModalidad40() {
+            const m40WageInput = parseFloat(document.getElementById("m40Wage").value) || 0;
+            if (m40WageInput <= 0) {
+                showToast("Por favor ingresa un salario diario de simulación válido.", "fa-circle-xmark");
+                return;
+            }
+
+            const currentObj = yearData[selectedYear];
+            const maxCapWage = currentObj.uma * 25;
+            
+            if (m40WageInput > maxCapWage) {
+                showToast(`Salario ajustado al límite máximo de ley (${formatCurrency(maxCapWage)})`, "fa-shield-halved");
+                document.getElementById("m40Wage").value = Math.round(maxCapWage);
+            }
+
+            const simDailyWage = Math.min(m40WageInput, maxCapWage);
+            const hasSixMonths = document.getElementById("sixMonthsRule").checked;
+
+            // Compute simulation math
+            const baseRes = runPensionMath(state.weeks, state.dailyWage, state.age, hasSixMonths, state.hasSpouse, state.childrenCount, state.parentsCount);
+            const simRes = runPensionMath(state.weeks, simDailyWage, state.age, hasSixMonths, state.hasSpouse, state.childrenCount, state.parentsCount);
+
+            // Display results container
+            const m40ResultsDiv = document.getElementById("m40Results");
+            m40ResultsDiv.classList.remove("hidden");
+
+            document.getElementById("m40ResultAmount").innerText = formatCurrency(simRes.finalMonthlyPension);
+            
+            const difference = simRes.finalMonthlyPension - baseRes.finalMonthlyPension;
+            const percentGain = baseRes.finalMonthlyPension > 0 ? (difference / baseRes.finalMonthlyPension) * 100 : 100;
+            
+            document.getElementById("m40ResultGain").innerText = `+${formatCurrency(difference)} (+${percentGain.toFixed(0)}%)`;
+
+            showToast("Simulación de Modalidad 40 proyectada", "fa-chart-line");
+        }
+
+        // Custom notification toast handler
+        let toastTimeout;
+        function showToast(message, iconName = "fa-check") {
+            const toast = document.getElementById("toast");
+            const toastMsg = document.getElementById("toastMessage");
+            const toastIcon = document.getElementById("toastIcon");
+
+            // Reset timers and transitions
+            clearTimeout(toastTimeout);
+            toast.classList.add("translate-y-20", "opacity-0");
+
+            setTimeout(() => {
+                toastMsg.innerText = message;
+                toastIcon.innerHTML = `<i class="fa-solid ${iconName}"></i>`;
+                toast.classList.remove("translate-y-20", "opacity-0");
+
+                toastTimeout = setTimeout(() => {
+                    toast.classList.add("translate-y-20", "opacity-0");
+                }, 4000);
+            }, 150);
+        }
+
+        // Copies calculated values to clipboard as clean summary text
+        function copySummaryToClipboard() {
+            const hasSixMonths = document.getElementById("sixMonthsRule").checked;
+            const currentObj = yearData[selectedYear];
+            const res = runPensionMath(state.weeks, state.dailyWage, state.age, hasSixMonths, state.hasSpouse, state.childrenCount, state.parentsCount);
+
+            const textToCopy = `*** RESUMEN DE ESTIMACIÓN DE PENSIÓN IMSS LEY 1973 ***
+Año de estimación: ${selectedYear}
+Semanas cotizadas: ${state.weeks}
+Salario diario promedio: ${formatCurrency(state.dailyWage)} (${(state.dailyWage / currentObj.uma).toFixed(2)} veces UMA)
+Edad de retiro: ${state.age} años ${hasSixMonths ? 'con más de 6 meses' : ''}
+Porcentaje por edad: ${Math.round(res.agePercentage * 100)}%
+
+--- ASIGNACIONES FAMILIARES ---
+Cónyuge: ${state.hasSpouse ? 'Sí' : 'No'}
+Hijos registrados: ${state.childrenCount}
+Padres registrados: ${state.parentsCount}
+Porcentaje total de ayuda: +${Math.round(res.allowancePercentage * 100)}%
+
+--- RESULTADOS ESTIMADOS ---
+Pensión Mensual Vitalicia: ${formatCurrency(res.finalMonthlyPension)} MXN/mes
+Aguinaldo de fin de año: ${formatCurrency(res.aguinaldo)} MXN
+Tasa de reemplazo: ${((res.finalMonthlyPension / (state.dailyWage * 30.4)) * 100).toFixed(1)}% de su sueldo promedio mensual
+Mínimo garantizado aplicado: ${res.isMinApplied ? 'Sí' : 'No'}
+
+*Calculado de forma segura en: Simulador de Pensiones Ley 1973.`;
+
+            // Standard fallback copier for canvas safety
+            const dummyInput = document.createElement("textarea");
+            document.body.appendChild(dummyInput);
+            dummyInput.value = textToCopy;
+            dummyInput.select();
+            document.execCommand("copy");
+            document.body.removeChild(dummyInput);
+
+            showToast("Resumen copiado al portapapeles", "fa-clipboard-check");
+        }
+    </script>
+</body>
+</html>
+
+```
